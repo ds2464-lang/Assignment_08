@@ -1,12 +1,12 @@
 # main.py
 
-from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import JSONResponse
-from fastapi.templating import Jinja2Templates
-from pydantic import BaseModel, Field, field_validator  # Use @validator for Pydantic 1.x
-from fastapi.exceptions import RequestValidationError
-from app.operations import add, subtract, multiply, divide  # Ensure correct import path
-import uvicorn
+from fastapi import FastAPI, HTTPException, Request  # type: ignore
+from fastapi.responses import JSONResponse # type: ignore
+from fastapi.templating import Jinja2Templates # type: ignore
+from pydantic import BaseModel, Field, field_validator  # type: ignore # Use @validator for Pydantic 1.x
+from fastapi.exceptions import RequestValidationError # type: ignore
+from app.operations import Number, add, subtract, multiply, divide  # Ensure correct import path
+import uvicorn # type: ignore
 import logging
 
 # Setup logging
@@ -116,3 +116,27 @@ async def divide_route(operation: OperationRequest):
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000)
+
+@app.post("/add")
+async def add_numbers(numbers: Number):
+    logger.info(f"Adding {numbers.a} and {numbers.b}")
+    result = add(numbers.a, numbers.b)
+    return {"result": result}
+
+@app.post("/subtract")
+async def add_numbers(numbers: Number):
+    logger.info(f"Subtracting {numbers.a} and {numbers.b}")
+    result = add(numbers.a, numbers.b)
+    return {"result": result}
+
+@app.post("/multiply")
+async def add_numbers(numbers: Number):
+    logger.info(f"Multiplying {numbers.a} and {numbers.b}")
+    result = add(numbers.a, numbers.b)
+    return {"result": result}
+
+@app.post("/divide")
+async def add_numbers(numbers: Number):
+    logger.info(f"dividing {numbers.a} and {numbers.b}")
+    result = add(numbers.a, numbers.b)
+    return {"result": result}

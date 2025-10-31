@@ -1,7 +1,7 @@
 # tests/integration/test_fastapi_calculator.py
 
-import pytest  # Import the pytest framework for writing and running tests
-from fastapi.testclient import TestClient  # Import TestClient for simulating API requests
+import pytest  # type: ignore # Import the pytest framework for writing and running tests
+from fastapi.testclient import TestClient  # type: ignore # Import TestClient for simulating API requests
 from main import app  # Import the FastAPI app instance from your main application file
 
 # ---------------------------------------------
@@ -152,3 +152,39 @@ def test_divide_by_zero_api(client):
     # Assert that the 'error' field contains the correct error message
     assert "Cannot divide by zero!" in response.json()['error'], \
         f"Expected error message 'Cannot divide by zero!', got '{response.json()['error']}'"
+
+# ----------------------------------------------
+# Test Function: test_add_endpoint
+# ----------------------------------------------
+
+def test_add_endpoint():
+    response = client.post("/add", json={"a": 10, "b": 5})
+    assert response.status_code == 200
+    assert response.json() == {"result": 15}
+
+# ----------------------------------------------
+# Test Function: test_subtract_endpoint
+# ----------------------------------------------
+
+def test_subtract_endpoint():
+    response = client.post("/subtract", json={"a": 5, "b": 2})
+    assert response.status_code == 200
+    assert response.json() == {"result": 3}
+
+# ----------------------------------------------
+# Test Function: test_multiply_endpoint
+# ----------------------------------------------
+
+def test_multiply_endpoint():
+    response = client.post("/multiply", json={"a": 2, "b": 3})
+    assert response.status_code == 200
+    assert response.json() == {"result": 6}
+
+# ----------------------------------------------
+# Test Function: test_divide_endpoint
+# ----------------------------------------------
+
+def test_divide_endpoint():
+    response = client.post("/divide", json={"a": 12, "b": 6})
+    assert response.status_code == 200
+    assert response.json() == {"result": 2}
