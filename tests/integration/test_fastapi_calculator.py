@@ -1,8 +1,9 @@
 # tests/integration/test_fastapi_calculator.py
 
-import pytest  # type: ignore # Import the pytest framework for writing and running tests
+import pytest  # Import the pytest framework for writing and running tests
 from fastapi.testclient import TestClient  # Import TestClient for simulating API requests
 from main import app  # Import the FastAPI app instance from your main application file
+client = TestClient(app)
 
 # ---------------------------------------------
 # Pytest Fixture: client
